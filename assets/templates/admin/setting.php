@@ -10,6 +10,7 @@
 	.rocket-font-wrap{margin:10px 20px 0px 2px;}
 	.input-group span.label{display:inline-block;width:200px;}
 	.rocket-font-family{font-size: 40px;display: inline-block;}
+	.rocket-font-review{height:180px;margin:auto;display:block;}
 	<?php foreach($font_list as $css_slug => $font_family): ?>
 		#select2-results-2 li.<?php echo $css_slug;?>{font-family:<?php echo $font_family['font_name'];?>;}
 	<?php endforeach; ?>
@@ -38,7 +39,7 @@
 	
 	<div class="rocket-font-wrap">
 		<div class="rocket-font-family notice" style="margin-left:0px;margin-bottom:10px;border-left:4px solid #1E8CBE;">
-			<p>현재 설정된 폰트</p>
+			<p>현재 폰트 설정</p>
 			<p>font-family:<span class="en-font-text"><?php echo $selected_backup_font_info['font_name'];?></span>,<span class="korean-font-text"><?php echo $options['selected_font'];?></span>,<span class="generic-font-text"><?php echo $selected_backup_font_info['generic_font_family'];?></span></p>
 		</div>
 		
@@ -112,11 +113,13 @@
 									endif; 
 									?>
 									<div class="input-group">
-										<div><span class="label">1. 사용</span> <input type="checkbox" name="font_use_<?php echo $tag?>" value="yes" <?php checked( $options['font_use_'.$tag], "yes" ); ?>></div>
+										<div><span class="label">1. 사용</span> <input type="checkbox" name="font_use_<?php echo $tag?>" value="yes" class="js-switch" <?php checked( $options['font_use_'.$tag], "yes" ); ?>></div>
+										<hr>
 										<div><span class="label">2. <?php echo $tag?>태그 폰트 색상</span> <input type="text" name="font_color_<?php echo $tag?>" value="<?php echo $options['font_color_'.$tag]?>" class="font-color"></div>
+										<hr>
 										3. <?php echo $tag?>태그 폰트 크기:<label class="rocket-font-size-<?php echo $tag?>-label"></label>px <div class="rocket-font-size-slider-<?php echo $tag?>"></div>
 										<input type="hidden" name="font_weight_<?php echo $tag?>" value="<?php echo $options['font_weight_'.$tag]?>">
-										
+										<hr>
 										4. <?php echo $tag?>태그 폰트 글 간격:<label class="rocket-font-lineheight-<?php echo $tag?>-label"></label>px
 										<div class="rocket-font-lineheight-slider-<?php echo $tag?>"></div>
 										<input type="hidden" name="font_lineheight_<?php echo $tag?>" value="<?php echo $options['font_lineheight_'.$tag]?>">

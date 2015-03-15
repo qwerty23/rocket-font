@@ -61,7 +61,7 @@ class RocketFont extends Plugin_Set {
 		if( class_exists('rocket_font\Font_Setting' ) ){
 				
 			$target_tag = Font_Setting::get_target_tag_list();
-			$create_value_names = array("font_weight_", "font_lineheight_", "font_color_");
+			$create_value_names = array("font_weight_", "font_lineheight_", "font_color_", "font_use_");
 			
 			$create_values = array();
 			foreach($create_value_names as $value_name):
@@ -86,9 +86,9 @@ class RocketFont extends Plugin_Set {
 	 * @hook register_activation_hook
 	 */
 	public static function activate_plugin() {
-
+		
 	}
-
+	
 	/**
 	 * Plugin deactivation hook
 	 *
@@ -98,7 +98,12 @@ class RocketFont extends Plugin_Set {
 	 * @hook register_deactivation_hook
 	 */
 	public static function deactivate_plugin() {
-
+		$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+		
+		if( in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
+			unset($dismissed_pointers[array_search("rocketfont_settings_pointer",$dismissed_pointers)]);
+			update_user_meta(get_current_user_id(),'dismissed_wp_pointers',$dismissed_pointers);
+		}
 	}
 
 } // End Class

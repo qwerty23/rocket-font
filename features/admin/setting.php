@@ -41,9 +41,49 @@ class Setting extends Feature {
 	
 	//관리 메뉴 추가
 	public function rocket_font_menu(){
-		
 		add_options_page('Rocket Font', 'Rocket Font', 'manage_options', PLUGIN_MENU_SLUG, array( &$this, 'setting_page' ));
 		
+		$enqueue_pointer_script_style = false;
+		$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+		
+		if( !in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
+			$enqueue_pointer_script_style = true;
+			$this->add_action("admin_print_footer_scripts","show_post_pointer");
+		}
+		
+		if( $enqueue_pointer_script_style ) {
+			wp_enqueue_style( 'wp-pointer' );
+			wp_enqueue_script( 'wp-pointer' );
+		}
+	}
+	
+	function show_post_pointer(){
+		
+		$wp_pointer_content = __('post pointer message', PLUGIN_PREFIX);
+		$wp_pointer_image_content = __('post image pointer message', PLUGIN_PREFIX);
+		?>
+		<script>
+		jQuery(document).ready( function($) {
+			
+			if($("#menu-settings .menu-icon-settings").length > 0){
+				var options = {"content":"<h3 class='dnp'>"+'Rokcet Font'+"<\/h3>"+'<p>플러그인이 활성화 되었습니다.</p><p>[설정] > [Rocket Font] 메뉴에서 폰트 설정을 해 주세요.</p>',"position":{"edge":"left","align":"center"}};
+				if ( ! options ) return;
+				
+				options = $.extend( options, {
+					close: function() {
+						$.post( ajaxurl, {
+							pointer: 'rocketfont_settings_pointer', 
+							action: 'dismiss-wp-pointer'
+						});
+					}
+				});
+				$('#menu-settings .menu-icon-settings').pointer( options ).pointer("open");
+				
+			}
+		});
+		</script>
+		
+		<?php
 	}
 	
 	//관리 메뉴 랜더링
@@ -81,13 +121,13 @@ class Setting extends Feature {
 		$a = fopen( PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.css', 'w');
 		fwrite($a, $result);
 		fclose($a);
-		chmod(PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.css', 0644);
+		@chmod(PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.css', 0644);
 		
 		$minify = $this->compress($result);
 		$b = fopen( PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.min.css', 'w');
 		fwrite($b, $minify);
 		fclose($b);
-		chmod(PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.min.css', 0644);
+		@chmod(PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.min.css', 0644);
 	}
 	
 	function compress($minify){
@@ -117,14 +157,16 @@ class Setting extends Feature {
 
 	public function enqueue() {
 		
+		wp_enqueue_script("jquery-ui-sortable");
+		
 		wp_enqueue_style(
 	        'select2',
-	        '//cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css'
+	        '//cdn.jsdelivr.net/select2/3.5.2/select2.css'
 	    );
 
 		wp_enqueue_script(
 	        'select2',
-	        '//cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js',
+	        '//cdn.jsdelivr.net/select2/3.5.2/select2.min.js',
 	        array( 'jquery' ),
 	        true
 	    );
@@ -186,6 +228,17 @@ class Setting extends Feature {
 	        true
 	    );
 		
+		wp_enqueue_style(
+	        'switchery',
+	        PLUGIN_URL .'assets/js/switchery/switchery.min.css'
+	    );
+
+		wp_enqueue_script(
+	        'switchery',
+	        PLUGIN_URL . 'assets/js/switchery/switchery.min.js',
+	        array( 'jquery' ),
+	        true
+	    );
 		
 	}
 }

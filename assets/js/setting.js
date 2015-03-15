@@ -61,6 +61,9 @@ jQuery(document).ready(function($){
 		$("div.rocketfont-plugin-setting .rocket-font-"+target_tag).css({"color":current_tag_font_color});
 		$("tr.item-"+target_tag+" .rocket-font-size-slider-"+target_tag+" ,.rocket-font-lineheight-slider-"+target_tag).css({"background-color":current_tag_font_color});
 		
+		var elem = document.querySelector('input[name=font_use_'+target_tag+']');
+		var init = new Switchery(elem,{color:current_tag_font_color});
+	
 		var current_tag_font_weight = ($(":hidden[name=font_weight_"+target_tag+"]").val().length > 0) ? $(":hidden[name=font_weight_"+target_tag+"]").val() : $(target_tag).css("font-size").replace(/px/,'');
 		$(".rocket-font-size-slider-"+target_tag).noUiSlider({
 			start:current_tag_font_weight,
@@ -108,6 +111,7 @@ jQuery(document).ready(function($){
 		containerWidth: '100%',
 		defaultTab: 1,
 		effect: 'none',
+		responsive: true,
 		theme:'pws_theme_grey'
 	});
 	
