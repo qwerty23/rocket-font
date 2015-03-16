@@ -44,7 +44,17 @@ class Setting extends Feature {
 		add_options_page('Rocket Font', 'Rocket Font', 'manage_options', PLUGIN_MENU_SLUG, array( &$this, 'setting_page' ));
 		
 		$enqueue_pointer_script_style = false;
-		$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+		$dismissed_pointers_values = get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true );
+		
+		if(is_array($dismissed_pointers_values)){
+			
+			$dismissed_pointers = $dismissed_pointers_values;
+			
+		}else{
+			
+			$dismissed_pointers = explode( ',', $dismissed_pointers_values );
+			
+		}
 		
 		if( !in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
 			$enqueue_pointer_script_style = true;
