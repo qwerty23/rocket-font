@@ -98,11 +98,18 @@ class RocketFont extends Plugin_Set {
 	 * @hook register_deactivation_hook
 	 */
 	public static function deactivate_plugin() {
-		$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+		$dismissed_pointers_values = get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true );
 		
-		if( in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
-			unset($dismissed_pointers[array_search("rocketfont_settings_pointer",$dismissed_pointers)]);
-			update_user_meta(get_current_user_id(),'dismissed_wp_pointers',$dismissed_pointers);
+		if($dismissed_pointers_values){
+			
+			$dismissed_pointers = explode( ',', $dismissed_pointers_values );
+		
+			if( in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
+				
+				unset($dismissed_pointers[array_search("rocketfont_settings_pointer",$dismissed_pointers)]);
+				update_user_meta(get_current_user_id(),'dismissed_wp_pointers',$dismissed_pointers);
+				
+			}
 		}
 	}
 
