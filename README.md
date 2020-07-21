@@ -37,7 +37,8 @@ css 를 잘 다루지 못하는 분들을 위해 최대한 심플하게 만들�
 
 ## 문의 혹은 건의사항
 
-기타 플러그인에 관한 문의 및 건의사항은 [플러그인 소개글]([http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/](http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/)) 에 부담없이 댓글이나 메일을 보내주세요.
+기타 플러그인에 관한 문의 및 건의사항은 [플러그인 소개글](http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/)에 부담없이 댓글이나 메일을 보내주세요.
 
 ## LICENSE
+
  MIT License
