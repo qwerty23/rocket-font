@@ -1,7 +1,7 @@
 ﻿=== Rocket Font ===
 Contributors: Qwerty
 Donate link: http://in-web.co.kr
-Plugin URI: http://rocketpress.kr
+Plugin URI: http://in-web.co.kr
 Tags: Wordpress Korean Font
 Requires at least: 4.1
 Tested up to: 4.1
