@@ -1,0 +1,16 @@
+body			{
+			font-family:  Spoqa Han Sans, sans-serif;
+			 color:#444444; 
+			}
+		h1			{
+			font-family:  Spoqa Han Sans, sans-serif;
+			 color:#23282d; 
+			}
+		h2			{
+			font-family:  Spoqa Han Sans, sans-serif;
+			 color:#23282d; 
+			}
+		.rocket-font,#rocket-font,#content,#content>h1,h2.entry-title>a,h1.entry-title,.entry-title	{font-family:Spoqa Han Sans,	
+	sans-serif		 	;
+		}
+	
