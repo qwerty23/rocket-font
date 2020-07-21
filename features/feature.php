@@ -24,11 +24,17 @@ class Feature {
 	 * @static
 	 */	
 	public function detect_option_change(){
-		switch($_POST['action']):
-			case'update':
-				self::update_option_check_match_default($_POST);
-				break;
-		endswitch;
+			
+		if(!empty($_POST['action'])){
+			$action = $_POST['action'];
+
+			switch($action):
+				case'update':
+					self::update_option_check_match_default($_POST);
+					break;
+			endswitch;
+
+		}
 	}
 
 	public function get_template() {

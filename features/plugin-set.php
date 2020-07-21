@@ -11,7 +11,7 @@ class Plugin_Set {
 	 * features 폴더안의 모든 클래스 파일을 싱글턴으로 로드하는  initialize 메서드
 	 *
 	 */
-	public function initialize( ) {
+	public static function initialize( ) {
 		if( class_exists( 'rocket_font\ClassLoader' ) ){
 			ClassLoader::load_plugin_classes();
 		}

@@ -1,5 +1,23 @@
 jQuery(document).ready(function($){
 	
+	// var font_single_multi_select = document.querySelector('input[name=font_single_multi_select]');
+	// font_single_multi_select.onchange = function() {
+		// if(font_single_multi_select.checked){
+			// $(".single-font").hide();
+			// $(".multi-font").show();
+		// }else{
+			// $(".single-font").show();
+			// $(".multi-font").hide();
+		// }
+	// };
+	//var init = new Switchery(font_single_multi_select);
+	
+	$.fn.powerTip.smartPlacementLists.n = ['ne', 'e', 'se'];
+	$('.tooltips').powerTip({
+		mouseOnToPopup: true,
+		smartPlacement: true
+	});
+
 	$(".rocket-font-select").select2({
 		placeholder:"사용할 폰트를 선택해 주세요",
 		width:"300px"
@@ -11,6 +29,11 @@ jQuery(document).ready(function($){
 		containment: 'parent',
 		start: function() { $("#e15").select2("onSortStart"); },
 		update: function() { $("#e15").select2("onSortEnd"); }
+	});
+	
+	/* 2015-10-23 추가 : 클래스 입력  */
+	$('textarea[name=rocketfont_class_id_list]').tagEditor({
+		placeholder: '폰트를 적용할 클래스명을 입력해 주세요.'
 	});
 	
 	var selected_font_family = $(".rocket-font-select option:selected").val();
@@ -63,7 +86,17 @@ jQuery(document).ready(function($){
 		
 		var elem = document.querySelector('input[name=font_use_'+target_tag+']');
 		var init = new Switchery(elem,{color:current_tag_font_color});
-	
+		
+		if(!$("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.js-switch').is(':checked')){
+			checkbox_status_text(false, target_tag);
+			checkbox_check(false, target_tag);
+		}
+		
+		$("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.js-switch').on('change',function(){
+			checkbox_status_text($(this).is(':checked'), target_tag);
+			checkbox_check($(this).is(':checked'), target_tag);
+		});
+		
 		var current_tag_font_weight = ($(":hidden[name=font_weight_"+target_tag+"]").val().length > 0) ? $(":hidden[name=font_weight_"+target_tag+"]").val() : $(target_tag).css("font-size").replace(/px/,'');
 		$(".rocket-font-size-slider-"+target_tag).noUiSlider({
 			start:current_tag_font_weight,
@@ -122,6 +155,22 @@ jQuery(document).ready(function($){
 		$(":hidden[name=selected_font_slug]").val(selected_font_slug);
 	});
 });
+
+function checkbox_check(status, target_tag){
+	if(status){
+		jQuery("tr.item-"+target_tag+" th, div.rocketfont-plugin-setting .rocket-font-"+target_tag).css({'text-decoration':''});
+	}else{
+		jQuery("tr.item-"+target_tag+" th, div.rocketfont-plugin-setting .rocket-font-"+target_tag).css({'text-decoration':'line-through'});
+	}
+}
+
+function checkbox_status_text(status, target_tag){
+	if(status){
+		jQuery("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.check-change').text("사용");
+	}else{
+		jQuery("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.check-change').text("사용하지 않음");
+	}
+}
 
 function rgb2hex(rgb) {
     rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);

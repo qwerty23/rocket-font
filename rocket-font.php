@@ -1,17 +1,17 @@
 <?php
 /*
  *	Plugin Name: 	Rocket Font
- *	Description:    한국 유저를 위한 한글 폰트 플러그인
- *	Author:         Park Jin Han
- *	Author URI:     http://in-web.co.kr
- *	Version: 		0.0.1
+ *  Plugin URI:  	http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/
+ *	Description:    한국 유저를 위한 한글 폰트 플러그인. 이제 css 파일을 수정하지 않고도 외국 테마처럼 사용하고 싶은 폰트를 선택하기만 하면 한글 폰트를 쓸 수 있습니다.
+ *	Author:         <a href="http://in-web.co.kr/">Qwerty23</a> & <a href="http://rocketpress.kr/">RocketPress</a>
+ *	Version: 		1.2.3
  *	Text Domain: 	RocketFont
  *	Domain Path: 	languages/
  */
 
 namespace rocket_font;
 
-define( 'rocket_font\VERSION', '0.0.1' );
+define( 'rocket_font\VERSION', '1.2.3' );
 define( 'rocket_font\PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'rocket_font\PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'rocket_font\PLUGIN_PREFIX'	, 'RocketFont');
@@ -53,9 +53,10 @@ class RocketFont extends Plugin_Set {
 			"selected_font"			=> "",
 			"selected_font_family"	=> "",
 			"selected_font_slug"	=> "",
+			"use_async"				=> "no",
 			"use_jquery"			=> "no",
 			"use_tinymce_editor"	=> "no",
-			
+			"rocketfont_class_id_list"	=> ".rocket-font,#rocket-font,.content,.content>p,#content,#content>p",
 		);
 		
 		if( class_exists('rocket_font\Font_Setting' ) ){
@@ -71,6 +72,7 @@ class RocketFont extends Plugin_Set {
 			endforeach;
 			
 			$defaults_value = array_merge($defaults_value, $create_values);
+			$defaults_value['font_use_body'] = "yes";
 		}
 		
 		
@@ -98,18 +100,11 @@ class RocketFont extends Plugin_Set {
 	 * @hook register_deactivation_hook
 	 */
 	public static function deactivate_plugin() {
-		$dismissed_pointers_values = get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true );
+		$dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
 		
-		if($dismissed_pointers_values){
-			
-			$dismissed_pointers = explode( ',', $dismissed_pointers_values );
-		
-			if( in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
-				
-				unset($dismissed_pointers[array_search("rocketfont_settings_pointer",$dismissed_pointers)]);
-				update_user_meta(get_current_user_id(),'dismissed_wp_pointers',$dismissed_pointers);
-				
-			}
+		if( in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
+			unset($dismissed_pointers[array_search("rocketfont_settings_pointer",$dismissed_pointers)]);
+			update_user_meta(get_current_user_id(),'dismissed_wp_pointers',$dismissed_pointers);
 		}
 	}
 

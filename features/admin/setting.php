@@ -1,5 +1,5 @@
 <?php
-//폰트 배열에 굵기까지 추가 
+
 namespace rocket_font;
 
 class Setting extends Feature {
@@ -14,7 +14,8 @@ class Setting extends Feature {
 			$this->add_action( 'admin_enqueue_scripts', 'enqueue' );
 			$this->add_action( 'admin_enqueue_scripts', 'load_korean_font' );
 			
-			if($_POST['action']=="update"):
+			if(!empty($_POST['action']) && $_POST['action']=="update"): 
+				
 				self::set_option("update_time",time());
 				$this->write_css();
 				
@@ -23,25 +24,34 @@ class Setting extends Feature {
 		endif;
 		
 		$this->add_filter( 'mce_css', 'add_tiny_mce_css' );
+		//$this->add_filter( 'tiny_mce_before_init', 'add_font_family_tinymce');
     }
+	
+	public function add_font_family_tinymce($initArray){
+		
+		foreach(Font_Setting::get_font_list() as $font_css_import_name => $font_info):
+			$initArray['font_formats'] .= $font_info["font_text_title"] . "=" . $font_info["font_name"] . ";";
+		endforeach;
+		
+		return $initArray;
+	}
 	
 	public function load_korean_font(){
 		
 		foreach(Font_Setting::get_font_list() as $font_css_import_name => $font_info):
 			wp_enqueue_style(
 		        'rocket-font-'.$font_css_import_name,
-		        //'//fonts.googleapis.com/earlyaccess/'.$font_css_import_name.'.css',
 		        $font_info['cdn_url'],
-		        time(),
+		        VERSION,
 		        true
 		    );
 		endforeach;
-		
 	}
 	
 	//관리 메뉴 추가
 	public function rocket_font_menu(){
-		add_options_page('Rocket Font', 'Rocket Font', 'manage_options', PLUGIN_MENU_SLUG, array( &$this, 'setting_page' ));
+		
+		add_options_page('Rocket Font', '로켓 폰트', 'manage_options', PLUGIN_MENU_SLUG, array( &$this, 'setting_page' ));
 		
 		$enqueue_pointer_script_style = false;
 		$dismissed_pointers_values = get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true );
@@ -72,11 +82,15 @@ class Setting extends Feature {
 		$wp_pointer_content = __('post pointer message', PLUGIN_PREFIX);
 		$wp_pointer_image_content = __('post image pointer message', PLUGIN_PREFIX);
 		?>
+		<style>
+			.wp-pointer-content h3.rocket-icon:before{font-family:FontAwesome !important; content: '\f135';}
+		</style>
 		<script>
 		jQuery(document).ready( function($) {
 			
 			if($("#menu-settings .menu-icon-settings").length > 0){
-				var options = {"content":"<h3 class='dnp'>"+'Rokcet Font'+"<\/h3>"+'<p>플러그인이 활성화 되었습니다.</p><p>[설정] > [Rocket Font] 메뉴에서 폰트 설정을 해 주세요.</p>',"position":{"edge":"left","align":"center"}};
+				
+				var options = {"content":"<h3 class='rocket-icon'>"+'Rokcet Font'+"<\/h3>"+'<p>플러그인이 활성화 되었습니다.</p><p>[설정] > [로켓 폰트] 메뉴에서 폰트 설정을 해 주세요.</p>',"position":{"edge":"left","align":"center"}};
 				if ( ! options ) return;
 				
 				options = $.extend( options, {
@@ -88,7 +102,6 @@ class Setting extends Feature {
 					}
 				});
 				$('#menu-settings .menu-icon-settings').pointer( options ).pointer("open");
-				
 			}
 		});
 		</script>
@@ -98,10 +111,11 @@ class Setting extends Feature {
 	
 	//관리 메뉴 랜더링
 	public function setting_page(){
-
 		$template = self::get_template();
 		$options = self::get_current_all_options();
 		$backup_font_list = Font_Setting::get_font_family_list();
+		
+		$template->set('plugin_url',PLUGIN_URL);
 		$template->set('version',VERSION);
 		$template->set('options',$options);
 		$template->set('font_list',Font_Setting::get_font_list());
@@ -128,22 +142,26 @@ class Setting extends Feature {
 		include PLUGIN_DIR . 'assets/templates/admin/tinymce-rocketfont-dynamic-css.php';
 		$result = ob_get_clean();
 		
-		$a = fopen( PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.css', 'w');
+		$css_save_path = Font_Setting::get_css_file_name(PLUGIN_DIR);
+		
+		$a = fopen($css_save_path . '.css', 'w');
 		fwrite($a, $result);
 		fclose($a);
-		@chmod(PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.css', 0644);
+		@chmod($css_save_path . '.css', 0644);
 		
 		$minify = $this->compress($result);
-		$b = fopen( PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.min.css', 'w');
+		$b = fopen($css_save_path . '.min.css', 'w');
 		fwrite($b, $minify);
 		fclose($b);
-		@chmod(PLUGIN_DIR . 'assets/css/tinymce_rocketfont_dynamic.min.css', 0644);
+		@chmod($css_save_path . '.min.css', 0644);
 	}
 	
 	function compress($minify){
+		
 		$minify = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $minify);
 		$minify = str_replace( array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $minify );
 		return $minify;
+		
 	}
 	
 	function add_tiny_mce_css( $mce_css ) {
@@ -155,11 +173,24 @@ class Setting extends Feature {
 			$font_list = Font_Setting::get_font_list();
 			$target_tag_list = Font_Setting::get_target_tag_list();
 			
-			$selected_font_info = $font_list[$options['selected_font_slug']];
-			$mce_css .= ', ' . $selected_font_info['cdn_url'];
-			
-			$mce_css .= ', ' . PLUGIN_URL . 'assets/css/tinymce_rocketfont_dynamic.min.css?'.$options['update_time'];
-			
+			if(true):
+				
+				$selected_font_info = $font_list[$options['selected_font_slug']];
+				$mce_css .= ', ' . $selected_font_info['cdn_url'];
+				
+				$css_save_path = Font_Setting::get_css_file_name(PLUGIN_URL);
+				
+				$mce_css .= ', ' . $css_save_path . '.min.css?'.$options['update_time'];
+				
+			else:
+				
+				foreach(Font_Setting::get_font_list() as $font_css_import_name => $font_info):
+					
+					$mce_css .= ', ' . $font_info['cdn_url'];
+					
+				endforeach;
+				
+			endif;
 		endif;
 		
 	    return $mce_css;
@@ -170,33 +201,30 @@ class Setting extends Feature {
 		wp_enqueue_script("jquery-ui-sortable");
 		
 		wp_enqueue_style(
+	        'fontawesome',
+	        '//cdn.jsdelivr.net/fontawesome/4.4.0/css/font-awesome.min.css'
+	    );
+		
+		wp_enqueue_style(
 	        'select2',
 	        '//cdn.jsdelivr.net/select2/3.5.2/select2.css'
 	    );
-
-		wp_enqueue_script(
-	        'select2',
-	        '//cdn.jsdelivr.net/select2/3.5.2/select2.min.js',
-	        array( 'jquery' ),
-	        true
+		
+		wp_enqueue_style(
+	        'minicolors',
+	        '//cdn.jsdelivr.net/jquery.minicolors/2.1.2/jquery.minicolors.css'
 	    );
 		
 		wp_enqueue_style(
-	        'nouislider',
-	        '//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.css'
+	        'jsdelivr-group',
+	        '//cdn.jsdelivr.net/g/jquery.powertip@1.2.0(css/jquery.powertip.min.css),jquery.nouislider@7.0.10(jquery.nouislider.min.css+jquery.nouislider.pips.min.css),jquery.switchery@0.8.1(switchery.min.css)'
 	    );
 		
-		wp_enqueue_style(
-	        'nouislider',
-	        //'//cdn.jsdelivr.net/jquery.nouislider/7.0.10/jquery.nouislider.pips.min.css'
-	        '//oss.maxcdn.com/jquery.nouislider/7.0.10/jquery.nouislider.pips.min.css'
-		);
-
 		wp_enqueue_script(
-	        'nouislider',
-	        //'//cdn.jsdelivr.net/jquery.nouislider/7.0.10/jquery.nouislider.all.min.js',
-	        '//oss.maxcdn.com/jquery.nouislider/7.0.10/jquery.nouislider.all.min.js',
+	        'jsdelivr-group',
+	        '//cdn.jsdelivr.net/g/select2@3.5.2(select2.min.js),jquery.minicolors@2.1.2(jquery.minicolors.min.js),jquery.powertip@1.2.0(jquery.powertip.min.js),jquery.nouislider@7.0.10(jquery.nouislider.all.min.js),jquery.switchery@0.8.1(switchery.min.js)',
 	        array( 'jquery' ),
+	        VERSION,
 	        true
 	    );
 		
@@ -209,6 +237,28 @@ class Setting extends Feature {
 	        'pwstabs',
 	        PLUGIN_URL . 'assets/js/pwstabs/jquery.pwstabs-1.2.1.min.js',
 	        array( 'jquery' ),
+	        VERSION,
+	        true
+	    );
+		
+		wp_enqueue_style(
+	        'tag-editor',
+	        PLUGIN_URL . 'assets/js/tag-editor/jquery.tag-editor.css'
+	    );
+
+		wp_enqueue_script(
+	        'tag-editor-caret',
+	        PLUGIN_URL . 'assets/js/tag-editor/jquery.caret.min.js',
+	        array( 'jquery' ),
+	        VERSION,
+	        true
+	    );
+		
+		wp_enqueue_script(
+	        'tag-editor',
+	        PLUGIN_URL . 'assets/js/tag-editor/jquery.tag-editor.min.js',
+	        array( 'jquery' ),
+	        VERSION,
 	        true
 	    );
 		
@@ -216,37 +266,7 @@ class Setting extends Feature {
 	        'rocket-font-admin-setting',
 	        PLUGIN_URL . 'assets/js/setting.js',
 	        array( 'jquery' ),
-	        true
-	    );
-		
-		wp_enqueue_style(
-	        'font-awesome',
-	        '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css'
-	    );
-		
-		wp_enqueue_style(
-	        'minicolors',
-	        //'//cdn.jsdelivr.net/jquery.minicolors/2.1.2/jquery.minicolors.css'
-	        '//oss.maxcdn.com/jquery.minicolors/2.1.2/jquery.minicolors.css'
-	    );
-
-		wp_enqueue_script(
-	        'minicolors',
-	        // '//cdn.jsdelivr.net/jquery.minicolors/2.1.2/jquery.minicolors.min.js',
-	        '//oss.maxcdn.com/jquery.minicolors/2.1.2/jquery.minicolors.min.js',
-	        array( 'jquery' ),
-	        true
-	    );
-		
-		wp_enqueue_style(
-	        'switchery',
-	        PLUGIN_URL .'assets/js/switchery/switchery.min.css'
-	    );
-
-		wp_enqueue_script(
-	        'switchery',
-	        PLUGIN_URL . 'assets/js/switchery/switchery.min.js',
-	        array( 'jquery' ),
+	        time(),
 	        true
 	    );
 		

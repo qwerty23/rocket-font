@@ -11,7 +11,7 @@ namespace rocket_font;
  */
 class ClassLoader {
 
-	public function load_plugin_classes() {
+	public static function load_plugin_classes() {
 		$load_list = array();
 		$load_list = array_merge( $load_list, self::glob_php( PLUGIN_DIR . 'features/core' ) );
 
