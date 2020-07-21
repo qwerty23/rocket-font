@@ -4,7 +4,7 @@ Donate link: https://in-web.co.kr/
 Plugin URI: https://in-web.co.kr/
 Tags: Wordpress Korean Font, rocket font, 로켓 폰트, 한글 폰트
 Requires at least: 3.5.1
-Tested up to: 5.5.0
+Tested up to: 5.5.1
 Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
