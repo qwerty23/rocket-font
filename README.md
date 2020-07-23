@@ -1,12 +1,12 @@
 # Wordpress Plugin - Rocket Font
 
 <p align="center">
-<img src="https://img.shields.io/wordpress/plugin/v/rocket-font?label=Plugin_Version" alt="text">
-<a href="https://wordpress.org/plugins/rocket-font/"><img src="https://img.shields.io/wordpress/plugin/installs/rocket-font?label=Active Installs&logo=wordpress&style=flat" alt="text"></a>
+<img src="https://img.shields.io/wordpress/plugin/v/rocket-font" alt="text">
+<a href="https://wordpress.org/plugins/rocket-font/"><img src="https://img.shields.io/wordpress/plugin/installs/rocket-font?logo=wordpress&style=flat" alt="text"></a>
 <a href="https://wordpress.org/plugins/rocket-font/">
-<img src="https://img.shields.io/wordpress/plugin/dt/rocket-font?logo=wordpress&label=Downloads" alt="text"></a>
+<img src="https://img.shields.io/wordpress/plugin/dt/rocket-font?logo=wordpress" alt="text"></a>
 <a href="https://wordpress.org/plugins/rocket-font/">
-<img src="https://img.shields.io/wordpress/plugin/stars/rocket-font?logo=wordpress&label=Rating" alt="text"></a>
+<img src="https://img.shields.io/wordpress/plugin/stars/rocket-font?logo=wordpress" alt="text"></a>
 </p>
 
 워드프레스에서 한글 폰트를 사용할 수 있는 플러그인입니다.
