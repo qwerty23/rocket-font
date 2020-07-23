@@ -1,7 +1,7 @@
 # Wordpress Plugin - Rocket Font
 
 <p align="center">
-<img src="https://img.shields.io/wordpress/plugin/v/rocket-font?label=Plugin&nbsp;Version" alt="text">
+<img src="https://img.shields.io/wordpress/plugin/v/rocket-font?label=Plugin_Version" alt="text">
 <a href="https://wordpress.org/plugins/rocket-font/"><img src="https://img.shields.io/wordpress/plugin/installs/rocket-font?label=Active Installs&logo=wordpress&style=flat" alt="text"></a>
 <a href="https://wordpress.org/plugins/rocket-font/">
 <img src="https://img.shields.io/wordpress/plugin/dt/rocket-font?logo=wordpress&label=Downloads" alt="text"></a>
