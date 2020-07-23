@@ -1,10 +1,19 @@
 # Wordpress Plugin - Rocket Font
+<p align="center">
+<img src="https://img.shields.io/wordpress/plugin/v/rocket-font?label=Plugin Version" alt="text">
+<a href="https://wordpress.org/plugins/rocket-font/"><img src="https://img.shields.io/wordpress/plugin/installs/rocket-font?label=Active Installs&logo=wordpress&style=flat" alt="text"></a>
+<a href="https://wordpress.org/plugins/rocket-font/">
+<img src="https://img.shields.io/wordpress/plugin/dt/rocket-font?logo=wordpress&label=Downloads" alt="text"></a>
+<a href="https://wordpress.org/plugins/rocket-font/">
+<img src="https://img.shields.io/wordpress/plugin/stars/rocket-font?logo=wordpress&label=Rating" alt="text"></a>
+</p>
 
+워드프레스에서 한글 폰트를 사용할 수 있는 플러그인입니다.
 - css 를 잘 다루지 못하는 분들을 위해 최대한 심플하게 만들었습니다.
 - 사용하고 싶은 폰트를 선택한 후 저장하면 끝입니다.
 
 조금 더 세세한 조정은 관리자 > 설정 > 로켓폰트 > "각 태그별 크기 및 글 간격 설정" 혹은 "class 및 id로 설정" 탭에서 할 수 있습니다.
- 
+
 
 ## 사용할 수 있는 한글 폰트 종류
 
@@ -40,4 +49,4 @@
 기타 플러그인에 관한 문의 및 건의사항은 [플러그인 소개글](http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/)에 부담없이 댓글이나 메일을 보내주세요.
 
 ## LICENSE
-[MIT license](http://opensource.org/licenses/MIT)
+[GPL-2.0 license](https://opensource.org/licenses/GPL-2.0)
