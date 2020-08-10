@@ -242,7 +242,7 @@
   {
     "start-url": "https://noonnu.cc/font_page/266",
     "font-name": "미니콩다방",
-    "font-family": "777Minibeancafe",
+    "font-family": "'777Minibeancafe'",
     "font-url": "@font-face {font-family: '777Minibeancafe';src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/777Minibeancafe.woff') format('woff');font-weight: normal;font-style: normal;}"
   },
   {
