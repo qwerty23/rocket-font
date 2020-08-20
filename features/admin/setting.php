@@ -5,27 +5,26 @@ namespace rocket_font;
 class Setting extends Feature {
 
 	public function __construct() {
-		
-    	$this->add_action( 'admin_menu', 'rocket_font_menu' );
-		
+
+		$this->add_action( 'admin_menu', 'rocket_font_menu' );
+
 		if(isset($_GET['page']) && in_array($_GET['page'],array(PLUGIN_MENU_SLUG))):
 			//업데이트 된 값이 있으면 반영
-			self::detect_option_change();
 			$this->add_action( 'admin_enqueue_scripts', 'enqueue' );
 			$this->add_action( 'admin_enqueue_scripts', 'load_korean_font' );
-			
+
 			if(!empty($_POST['action']) && $_POST['action']=="update"): 
 				
+				self::detect_option_change();
 				self::set_option("update_time",time());
 				$this->write_css();
-				
+
 			endif;
-			
+
 		endif;
-		
+
 		$this->add_filter( 'mce_css', 'add_tiny_mce_css' );
-		//$this->add_filter( 'tiny_mce_before_init', 'add_font_family_tinymce');
-    }
+	}
 	
 	public function add_font_family_tinymce($initArray){
 		
@@ -40,30 +39,26 @@ class Setting extends Feature {
 		
 		foreach(Font_Setting::get_font_list() as $font_css_import_name => $font_info):
 			wp_enqueue_style(
-		        'rocket-font-'.$font_css_import_name,
-		        $font_info['cdn_url'],
-		        VERSION,
-		        true
-		    );
+				'rocket-font-'.$font_css_import_name,
+				$font_info['cdn_url'],
+				VERSION,
+				true
+			);
 		endforeach;
 	}
-	
+
 	//관리 메뉴 추가
 	public function rocket_font_menu(){
-		
+
 		add_options_page('Rocket Font', '로켓 폰트', 'manage_options', PLUGIN_MENU_SLUG, array( &$this, 'setting_page' ));
-		
+
 		$enqueue_pointer_script_style = false;
 		$dismissed_pointers_values = get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true );
-		
+
 		if(is_array($dismissed_pointers_values)){
-			
 			$dismissed_pointers = $dismissed_pointers_values;
-			
 		}else{
-			
 			$dismissed_pointers = explode( ',', $dismissed_pointers_values );
-			
 		}
 		
 		if( !in_array( 'rocketfont_settings_pointer', $dismissed_pointers ) ) {
@@ -82,15 +77,12 @@ class Setting extends Feature {
 		$wp_pointer_content = __('post pointer message', PLUGIN_PREFIX);
 		$wp_pointer_image_content = __('post image pointer message', PLUGIN_PREFIX);
 		?>
-		<style>
-			.wp-pointer-content h3.rocket-icon:before{font-family:FontAwesome !important; content: '\f135';}
-		</style>
 		<script>
 		jQuery(document).ready( function($) {
 			
 			if($("#menu-settings .menu-icon-settings").length > 0){
 				
-				var options = {"content":"<h3 class='rocket-icon'>"+'Rokcet Font'+"<\/h3>"+'<p>플러그인이 활성화 되었습니다.</p><p>[설정] > [로켓 폰트] 메뉴에서 폰트 설정을 해 주세요.</p>',"position":{"edge":"left","align":"center"}};
+				var options = {"content":"<h3>"+'Rokcet Font'+"<\/h3>"+'<p>플러그인이 활성화 되었습니다.</p><p>[설정] > [로켓 폰트] 메뉴에서 폰트 설정을 해 주세요.</p>',"position":{"edge":"left","align":"center"}};
 				if ( ! options ) return;
 				
 				options = $.extend( options, {
@@ -111,6 +103,7 @@ class Setting extends Feature {
 	
 	//관리 메뉴 랜더링
 	public function setting_page(){
+		
 		$template = self::get_template();
 		$options = self::get_current_all_options();
 		$backup_font_list = Font_Setting::get_font_family_list();
@@ -122,78 +115,123 @@ class Setting extends Feature {
 		$template->set('target_tag',Font_Setting::get_target_tag_list());
 		$template->set('font_family_list',$backup_font_list);
 		
-		$selected_backup_font_info = $backup_font_list[$options['selected_font_family']];
-		$template->set('selected_backup_font_info',$backup_font_list[$options['selected_font_family']]);
+		$selected_backup_font_info["font_name"] = "";
+		$selected_backup_font_info["generic_font_family"] = "";
 		
+		if(!empty($options['selected_font_family'])):
+			$selected_backup_font_info = $backup_font_list[$options['selected_font_family']];
+		endif;
+		
+		$template->set('selected_backup_font_info',$selected_backup_font_info);
 		echo $template->apply("admin/setting.php");
 
 	}
 	
+	//폰트 이름중 스페이스가 있을경우 쌍따옴표로 묶음
+	function detect_space($font_name){
+		
+		$double_qute = '"';
+		
+		if (preg_match('/^\S.*\s.*\S$/', $font_name)){
+			$font_name = $double_qute . $font_name . $double_qute;
+		}
+		
+		return $font_name;
+	}
+	
+	/* 백업 (영문) 폰트를 선택했을경우
+	 * 백업, 한글, 제너릭
+	 * 의 순서대로 문자열을 반환
+	 */
+	function get_font_family_string($selected_backup_font_info, $selected_font_info){
+		
+		if(!empty($selected_backup_font_info['font_name'])){
+			$selected_backup_font_info['font_name'] = $selected_backup_font_info['font_name'] . ", ";
+			$selected_backup_font_info['generic_font_family'] = ", " . $selected_backup_font_info['generic_font_family'];
+		}
+		
+		return $selected_backup_font_info['font_name'] . $this->detect_space($selected_font_info['font_name']) . $selected_backup_font_info['generic_font_family'];
+	}
+	
+	/* 
+	 * 저장 버튼을 눌렀을 경우
+	 * 1. css 파일 생성
+	 * 2. 1의 css 로 용량 압축버전 min.css 를 생성
+	 */
 	function write_css(){
+		
+		$css_save_path = Font_Setting::get_css_file_name(PLUGIN_DIR);
+		
+		if(is_file($css_save_path . '.css'))
+			unlink($css_save_path . '.css');
+		
+		if(is_file($css_save_path . '.min.css'))
+			unlink($css_save_path . '.min.css');
 		
 		$options = self::get_current_all_options();
 		$font_list = Font_Setting::get_font_list();
 		$backup_font_list = Font_Setting::get_font_family_list();
 		$target_tag_list = Font_Setting::get_target_tag_list();
 		$selected_font_info = $font_list[$options['selected_font_slug']];
-		$selected_backup_font_info = $backup_font_list[$options['selected_font_family']];
+		
+		$selected_backup_font_info['font_name'] = "";
+		$selected_backup_font_info['generic_font_family'] = "";
+		
+		if(!empty($options['selected_font_family'])):
+			
+			$selected_backup_font_info = $backup_font_list[$options['selected_font_family']];
+			
+		endif;
 		
 		ob_start();
-		include PLUGIN_DIR . 'assets/templates/admin/tinymce-rocketfont-dynamic-css.php';
-		$result = ob_get_clean();
-		
-		$css_save_path = Font_Setting::get_css_file_name(PLUGIN_DIR);
+		include PLUGIN_DIR . 'assets/templates/admin/rocketfont-dynamic-css.php';
+		$rocketfont_css_file = ob_get_clean();
 		
 		$a = fopen($css_save_path . '.css', 'w');
-		fwrite($a, $result);
+		fwrite($a, $rocketfont_css_file);
 		fclose($a);
 		@chmod($css_save_path . '.css', 0644);
 		
-		$minify = $this->compress($result);
+		$rocketfont_css_file_minify = $this->compress($rocketfont_css_file);
 		$b = fopen($css_save_path . '.min.css', 'w');
-		fwrite($b, $minify);
+		fwrite($b, $rocketfont_css_file_minify);
 		fclose($b);
 		@chmod($css_save_path . '.min.css', 0644);
 	}
 	
-	function compress($minify){
+	function compress($rocketfont_css_file){
 		
-		$minify = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $minify);
-		$minify = str_replace( array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $minify );
-		return $minify;
+		$rocketfont_css_file = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $rocketfont_css_file);
+		$rocketfont_css_file = str_replace( array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $rocketfont_css_file );
+		return $rocketfont_css_file;
 		
 	}
 	
+	/*
+	 * 옵션에서 에디터에서 폰트 사용을 선택했을경우
+	 * tinymce 에 폰트와 생성된 css 파일을 추가
+	 */
 	function add_tiny_mce_css( $mce_css ) {
 		
-	 	$options = self::get_current_all_options();
+		if ( ! empty( $mce_css ) )
+			$mce_css .= ',';
+		
+		$options = self::get_current_all_options();
 		
 		if($options['use_tinymce_editor'] == "yes" && $options['selected_font']):
 			
 			$font_list = Font_Setting::get_font_list();
 			$target_tag_list = Font_Setting::get_target_tag_list();
-			
-			if(true):
-				
-				$selected_font_info = $font_list[$options['selected_font_slug']];
-				$mce_css .= ', ' . $selected_font_info['cdn_url'];
-				
-				$css_save_path = Font_Setting::get_css_file_name(PLUGIN_URL);
-				
-				$mce_css .= ', ' . $css_save_path . '.min.css?'.$options['update_time'];
-				
-			else:
-				
-				foreach(Font_Setting::get_font_list() as $font_css_import_name => $font_info):
-					
-					$mce_css .= ', ' . $font_info['cdn_url'];
-					
-				endforeach;
-				
-			endif;
+
+			$selected_font_info = $font_list[$options['selected_font_slug']];
+			$mce_css .= ', ' . $selected_font_info['cdn_url'];
+
+			$css_save_path = Font_Setting::get_css_file_name(PLUGIN_URL);
+			$mce_css .= ', ' . $css_save_path . '.min.css?'.$options['update_time'];
+
 		endif;
 		
-	    return $mce_css;
+		return $mce_css;
 	}
 
 	public function enqueue() {

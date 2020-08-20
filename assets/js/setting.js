@@ -1,17 +1,5 @@
 jQuery(document).ready(function($){
 	
-	// var font_single_multi_select = document.querySelector('input[name=font_single_multi_select]');
-	// font_single_multi_select.onchange = function() {
-		// if(font_single_multi_select.checked){
-			// $(".single-font").hide();
-			// $(".multi-font").show();
-		// }else{
-			// $(".single-font").show();
-			// $(".multi-font").hide();
-		// }
-	// };
-	//var init = new Switchery(font_single_multi_select);
-	
 	$.fn.powerTip.smartPlacementLists.n = ['ne', 'e', 'se'];
 	$('.tooltips').powerTip({
 		mouseOnToPopup: true,
@@ -88,12 +76,10 @@ jQuery(document).ready(function($){
 		var init = new Switchery(elem,{color:current_tag_font_color});
 		
 		if(!$("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.js-switch').is(':checked')){
-			checkbox_status_text(false, target_tag);
 			checkbox_check(false, target_tag);
 		}
 		
 		$("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.js-switch').on('change',function(){
-			checkbox_status_text($(this).is(':checked'), target_tag);
 			checkbox_check($(this).is(':checked'), target_tag);
 		});
 		
@@ -159,23 +145,17 @@ jQuery(document).ready(function($){
 function checkbox_check(status, target_tag){
 	if(status){
 		jQuery("tr.item-"+target_tag+" th, div.rocketfont-plugin-setting .rocket-font-"+target_tag).css({'text-decoration':''});
-	}else{
-		jQuery("tr.item-"+target_tag+" th, div.rocketfont-plugin-setting .rocket-font-"+target_tag).css({'text-decoration':'line-through'});
-	}
-}
-
-function checkbox_status_text(status, target_tag){
-	if(status){
 		jQuery("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.check-change').text("사용");
 	}else{
+		jQuery("tr.item-"+target_tag+" th, div.rocketfont-plugin-setting .rocket-font-"+target_tag).css({'text-decoration':'line-through'});
 		jQuery("div.rocketfont-plugin-setting .rocket-font-"+target_tag).parent().children('.input-group').children().children('.check-change').text("사용하지 않음");
 	}
 }
 
 function rgb2hex(rgb) {
-    rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
-    function hex(x) {
-        return ("0" + parseInt(x).toString(16)).slice(-2);
-    }
-    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+	rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+	function hex(x) {
+		return ("0" + parseInt(x).toString(16)).slice(-2);
+	}
+	return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }

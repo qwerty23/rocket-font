@@ -33,6 +33,7 @@
 	<?php endforeach; ?>
 </style>
 	
+<div class="wrap">
 	<p></p>
 	<h1><i class="fa fa-rocket fa-2x"></i>Rocket Font</h1>
 	<p></p>
@@ -62,8 +63,7 @@
 					<!-- <div style="display:none;">하나의 폰트만 사용<input type="checkbox" name="font_single_multi_select" value="single" class="js-switch" <?php //checked( $options['font_single_multi_select'], "single" ); ?>>선택한 복수의 폰트 사용</div> -->
 					<div class="">
 						<div class="single-font">
-							<h2><i class='fa fa-font'></i> 기본 폰트 설정</h2>
-							<label>기본 폰트 선택 : </label>
+							<h2>한글 폰트 설정</h2>
 							<select class="rocket-font-select " name="selected_font">
 								<option value="">선택하지 않음</option>
 								<?php
@@ -74,15 +74,13 @@
 								endforeach;
 								?>
 							</select>
-							<i class="fa fa-question-circle fa-c2x tooltips" title="<b>기본 폰트란?</b><p>사이트에 사용할 기본 폰트입니다.<br>보통 다운받아서 사용중인 테마의 경우 영문 폰트를 사용하는데 이 폰트를 한글로 변경합니다.</p>"></i>
+							<i class="fa fa-question-circle fa-c2x tooltips" title="<p>사이트에 사용할 기본 한글 폰트를 설정합니다.<br>1. 폰트를 선택하고 저장한다음 사이트의 유저 페이지를 확인해 보세요.<br>2. 두번째 탭[각 태그별 크기 및 글 간격 설정]에서 전부 사용함으로 바꾼 후 다시한번 확인해 보세요.</p>"></i>
 							<p></p>
-							<code>한글 폰트를 설정해 주세요.</code>
 							<input type="hidden" name="selected_font_slug" value=""/>
 						</div>
 						<hr>
 						<div class="single-font">
-							<h2><i class='fa fa-font'></i> 영문 폰트</h2>
-							<label>영문 폰트 선택 : </label>
+							<h2>영문 폰트 설정</h2>
 							<select class="rocket-font-fontfamily" name="selected_font_family">
 								<option value="">선택하지 않음</option>
 								<?php
@@ -136,11 +134,11 @@
 									<?php 
 									if($tag=="body"):
 									?>
-										<div class="rocket-font-<?php echo $tag?> rocket-font rocket-font-review"><?php echo $tag;?> 태그의 폰트 크기를 지정해 주세요.<br>사이트 전체의 폰트 사이즈이며 별도로 사이즈가 지정되지 않은 태그일경우 이 사이즈가 적용될 것입니다.<br>초기값은 이 사이트에 설정되어 있던 값입니다.</div>
+										<div class="rocket-font-<?php echo $tag?> rocket-font rocket-font-review"><?php echo $tag;?> 태그의 폰트 크기를 지정해 주세요.<br>body 태그는 사이트 전체의 기본 폰트 사이즈이며 밑의 p태그와 함께 글의 본문 등에 사용됩니다.<br>폰트에 따라 글씨의 크기가 작아지는 경우도 있으니 (필기체 등)<br>아래의 크기 및 글간격 설정으로 적절히 조정해서 사용하시기 바랍니다.<br></div>
 									<?php
 									else:
 									?>
-										<<?php echo $tag?> class="rocket-font-<?php echo $tag?> rocket-font rocket-font-review"><?php echo $tag;?> 태그의 폰트 크기를 지정해 주세요.<br>별도로 사이즈가 지정되지 않은 태그일경우 이 사이즈가 적용될 것입니다.<br>초기값은 이 사이트에 설정되어 있던 값입니다.</<?php echo $tag?>>
+										<<?php echo $tag?> class="rocket-font-<?php echo $tag?> rocket-font rocket-font-review"><?php echo $tag;?> 태그의 폰트 크기를 지정해 주세요.<br>별도로 사이즈가 지정되지 않은 태그일경우 이 사이즈가 적용될 것입니다.</<?php echo $tag?>>
 									<?php 
 									endif; 
 									?>
@@ -256,3 +254,4 @@
 			기타 플러그인에 관한 문의 및 건의사항은 <a href="http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/" target="_blank"><i class="fa fa-rocket"></i>플러그인 소개 글</a> 에 댓글 혹은 문의 메일을 보내 주세요.
 		</div>
 	</div>
+</div>

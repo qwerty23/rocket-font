@@ -1,11 +1,11 @@
 ﻿=== Rocket Font ===
 Contributors: Qwerty23
-Donate link: http://in-web.kr
-Plugin URI: http://in-web.kr
+Donate link: http://in-web.co.kr
+Plugin URI: http://in-web.co.kr
 Tags: Wordpress Korean Font, rocket font, 로켓 폰트, 한글 폰트
 Requires at least: 3.5.1
-Tested up to: 5.4.2
-Stable tag: 1.2.3
+Tested up to: 5.5
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,27 @@ css 를 다루지 못하는 분들을 위해 최대한 심플하게 만들었습
 2. 설정된 폰트가 표시되는 화면입니다.
 
 == Changelog ==
+
+= 1.2.5 =
+* add : 폰트 추가 - 검은고딕
+* add : 폰트 추가 - 고딕 A1
+* add : 폰트 추가 - 송명
+* add : 폰트 추가 - 감자꽃마을
+* add : 폰트 추가 - 개구쟁이
+* add : 폰트 추가 - 구기
+* add : 폰트 추가 - 귀여운폰트
+* add : 폰트 추가 - 기랑해랑
+* add : 폰트 추가 - 대한 민국 독도
+* add : 폰트 추가 - 도현
+* add : 폰트 추가 - 독도
+* add : 폰트 추가 - 서툰 이야기
+* add : 폰트 추가 - 스타일리시
+* add : 폰트 추가 - 연성
+* add : 폰트 추가 - 주아
+* add : 폰트 추가 - 하이멜로디
+* add : 폰트 추가 - 해바라기
+* add : 폰트 추가 - 흑백사진
+* add : uninstall.php 파일 추가 - 플러그인 삭제시 DB값 제거
 
 = 1.2.3 =
 * add : 폰트 추가 - 나눔 스퀘어
