@@ -38,11 +38,12 @@ class PluginOptions {
 	 */
 	public static function update_option_check_match_default($post){
 		$options = shortcode_atts(RocketFont::defaults(), self::get_current_all_options());
+		
 		foreach($options as $option_name => $option_value):
 			//if(empty($post[$option_name])) continue;
 			
 			//값이 존재하고 그 값이 기본값과 일치하지 않을 경우만 업데이트
-			if($option_value != $post[$option_name]):
+			if(isset($post[$option_name]) && $option_value != $post[$option_name]):
 				self::update_option($option_name, $post[$option_name]);
 			endif;
 		endforeach;

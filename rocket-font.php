@@ -3,15 +3,15 @@
  *	Plugin Name: 	Rocket Font
  *  Plugin URI:  	http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/
  *	Description:    한국 유저를 위한 한글 폰트 플러그인. 이제 css 파일을 수정하지 않고도 외국 테마처럼 사용하고 싶은 폰트를 선택하기만 하면 한글 폰트를 쓸 수 있습니다.
- *	Author:         <a href="http://in-web.co.kr/">Qwerty23</a> & <a href="http://rocketpress.kr/">RocketPress</a>
- *	Version: 		1.2.3
+ *	Author:         <a href="http://in-web.co.kr/">Qwerty23</a>
+ *	Version: 		1.2.5
  *	Text Domain: 	RocketFont
  *	Domain Path: 	languages/
  */
 
 namespace rocket_font;
 
-define( 'rocket_font\VERSION', '1.2.3' );
+define( 'rocket_font\VERSION', '1.2.5' );
 define( 'rocket_font\PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'rocket_font\PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'rocket_font\PLUGIN_PREFIX'	, 'RocketFont');
