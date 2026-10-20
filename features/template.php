@@ -1,6 +1,10 @@
 <?php
 namespace rocket_font;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // 직접 접근 차단
+}
+
 class Template {
 
 	private static $template_path;

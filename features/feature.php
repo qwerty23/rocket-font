@@ -1,6 +1,10 @@
 <?php
 namespace rocket_font;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // 직접 접근 차단
+}
+
 /*
 	 *
 	 * features폴더 안에 구현할 파일은 반드시 이 파일을 상속받아야 함
@@ -18,25 +22,6 @@ class Feature {
 		return NULL;
 	}
 	
-	/**
-	 * 옵션값이 변경되었을때 업데이트하는 펑션
-	 *
-	 * @static
-	 */	
-	public function detect_option_change(){
-			
-		if(!empty($_POST['action'])){
-			$action = $_POST['action'];
-
-			switch($action):
-				case'update':
-					self::update_option_check_match_default($_POST);
-					break;
-			endswitch;
-
-		}
-	}
-
 	public function get_template() {
 		return new Template();
 	}
@@ -54,13 +39,13 @@ class Feature {
 	}
 	
 	/**
-	 *  post 값과 default(이전에 저장된 옵션값) 를 비교 후 post 값에 변화가 있으면 업데이트
+	 * 검증이 끝난 여러 옵션값을 한번에 저장 (사용자 입력은 반드시 Sanitizer 를 먼저 거칠 것)
 	 *
-	 * @param $post  사용자가 입력한 폼값
+	 * @param array $values 키 => 값
 	 * @return boolean
 	 */
-	public static function update_option_check_match_default($post){
-		return PluginOptions::update_option_check_match_default( $post );
+	public function set_options( $values ) {
+		return PluginOptions::update_options( $values );
 	}
 
 	public function marshal( $method_name ) {

@@ -1,6 +1,10 @@
 <?php
 namespace rocket_font;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // 직접 접근 차단
+}
+
 class PluginOptions {
 
 	/**
@@ -26,31 +30,45 @@ class PluginOptions {
 		}
 		return $default;
 	}
-	
+
 	public static function get_current_all_options() {
-		return shortcode_atts(RocketFont::defaults(), get_option( self::$option_key ));
+		$saved = get_option( self::$option_key );
+		return shortcode_atts( RocketFont::defaults(), is_array( $saved ) ? $saved : array() );
 	}
-	
+
 	/**
-	 *  post 값과 default(이전에 저장된 옵션값) 를 비교 후 post 값에 변화가 있으면 업데이트
+	 * 여러 옵션을 한번에 저장
+	 * 플러그인에 정의된 옵션 키(RocketFont::defaults)만 저장되며 그 외의 키는 무시됨
+	 * 값 검증은 호출하는 쪽(Sanitizer)에서 끝낸 상태여야 함
 	 *
-	 * @param $post  사용자가 입력한 폼값
+	 * @param array $values 키 => 값
+	 * @return boolean
 	 */
-	public static function update_option_check_match_default($post){
-		$options = shortcode_atts(RocketFont::defaults(), self::get_current_all_options());
-		
-		foreach($options as $option_name => $option_value):
-			//if(empty($post[$option_name])) continue;
-			
-			//값이 존재하고 그 값이 기본값과 일치하지 않을 경우만 업데이트
-			if(isset($post[$option_name]) && $option_value != $post[$option_name]):
-				self::update_option($option_name, $post[$option_name]);
-			endif;
-		endforeach;
+	public static function update_options( $values ) {
+		if ( ! is_array( $values ) ) {
+			return false;
+		}
+
+		$allowed = RocketFont::defaults();
+		$options = get_option( self::$option_key );
+		if ( ! is_array( $options ) ) {
+			$options = array();
+		}
+
+		foreach ( $values as $name => $value ) {
+			if ( array_key_exists( $name, $allowed ) ) {
+				$options[ $name ] = $value;
+			}
+		}
+
+		return update_option( self::$option_key, $options );
 	}
-	
+
 	public static function update_option( $name, $value ) {
-		$options          = get_option( self::$option_key );
+		$options = get_option( self::$option_key );
+		if ( ! is_array( $options ) ) {
+			$options = array();
+		}
 		$options[ $name ] = $value;
 
 		return update_option( self::$option_key, $options );

@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Rocket Font\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-31 07:36+0000\n"
+"PO-Revision-Date: 2017-08-31 07:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: Korean\n"
+"Language: ko-KR\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#. Name of the plugin
+msgid "Rocket Font"
+msgstr "로켓 폰트"
+
+#. Description of the plugin
+msgid ""
+"한국 유저를 위한 한글 폰트 플러그인. 이제 css 파일을 수정하지 않고도 외국 테마처럼 사용하고 싶은 폰트를 선택하기만 하면 한글 "
+"폰트를 쓸 수 있습니다."
+msgstr ""
+
+#. URI of the plugin
+msgid ""
+"http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-"
+"%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/"
+msgstr ""

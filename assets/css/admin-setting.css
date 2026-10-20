@@ -1,0 +1,357 @@
+/**
+ * Rocket Font 설정 화면 스타일
+ * 워드프레스 관리자 기본 스타일 위에서 동작하도록 .rocket-font-admin 아래로만 적용
+ */
+
+.rocket-font-admin .rf-version {
+	font-size: 12px;
+	font-weight: 400;
+	color: #646970;
+	margin-left: 6px;
+}
+
+/* 레이아웃 : 왼쪽 설정, 오른쪽 미리보기 (좁은 화면에서는 세로로) */
+.rocket-font-admin .rf-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+	gap: 20px;
+	align-items: start;
+	margin-top: 12px;
+}
+
+@media (max-width: 1100px) {
+	.rocket-font-admin .rf-layout {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.rocket-font-admin .rf-preview {
+		order: -1;
+	}
+}
+
+/* 카드 */
+.rocket-font-admin .rf-card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 16px 20px;
+	margin-bottom: 16px;
+}
+
+.rocket-font-admin .rf-card h2 {
+	margin: 0 0 12px;
+	padding: 0;
+	font-size: 15px;
+}
+
+.rocket-font-admin .rf-card h2 .dashicons {
+	color: #2271b1;
+	margin-right: 4px;
+}
+
+/* 항목 */
+.rocket-font-admin .rf-field {
+	margin: 0 0 18px;
+}
+
+.rocket-font-admin .rf-field > label:not(.rf-inline),
+.rocket-font-admin .rf-label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.rocket-font-admin .rf-inline {
+	display: inline-block;
+	margin-right: 16px;
+}
+
+.rocket-font-admin .rf-field select {
+	min-width: 260px;
+	max-width: 100%;
+}
+
+.rocket-font-admin .rf-en-select,
+.rocket-font-admin .rf-en-text {
+	margin-top: 8px;
+}
+
+.rocket-font-admin [hidden] {
+	display: none !important;
+}
+
+/* 펼침 영역 */
+.rocket-font-admin .rf-details {
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 0 12px;
+	margin: 10px 0;
+}
+
+.rocket-font-admin .rf-details > summary {
+	cursor: pointer;
+	font-weight: 600;
+	padding: 10px 0;
+}
+
+.rocket-font-admin .rf-details[open] > summary {
+	border-bottom: 1px solid #dcdcde;
+	margin-bottom: 10px;
+}
+
+/* 태그별 표 */
+.rocket-font-admin .rf-tag-table {
+	margin: 4px 0 8px;
+}
+
+.rocket-font-admin .rf-tag-table th,
+.rocket-font-admin .rf-tag-table td {
+	vertical-align: middle;
+}
+
+.rocket-font-admin .rf-num input[type="number"] {
+	width: 90px;
+}
+
+.rocket-font-admin .rf-range {
+	width: 110px;
+	vertical-align: middle;
+	margin-right: 6px;
+}
+
+.rocket-font-admin .rf-tag-row .wp-picker-container {
+	white-space: nowrap;
+}
+
+/* 토글 스위치 (체크박스를 스위치처럼 표시) */
+.rocket-font-admin .rf-switch {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 22px;
+}
+
+.rocket-font-admin .rf-switch input {
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.rocket-font-admin .rf-switch-ui {
+	position: absolute;
+	inset: 0;
+	background: #8c8f94;
+	border-radius: 22px;
+	transition: background .15s;
+}
+
+.rocket-font-admin .rf-switch-ui::before {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 16px;
+	height: 16px;
+	background: #fff;
+	border-radius: 50%;
+	transition: transform .15s;
+}
+
+.rocket-font-admin .rf-switch input:checked + .rf-switch-ui {
+	background: #2271b1;
+}
+
+.rocket-font-admin .rf-switch input:checked + .rf-switch-ui::before {
+	transform: translateX(18px);
+}
+
+.rocket-font-admin .rf-switch input:focus-visible + .rf-switch-ui {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+/* 미리보기 */
+/* 미리보기 칸은 왼쪽 설정 영역과 같은 높이로 늘려 둔다. 그래야 안쪽 상자(sticky)가 스크롤을 따라 움직일 수 있다 */
+.rocket-font-admin .rf-preview {
+	align-self: stretch;
+}
+
+.rocket-font-admin .rf-preview-inner {
+	position: sticky;
+	top: 42px; /* 관리자 상단 바 아래 */
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 16px 20px;
+	max-height: calc(100vh - 140px);
+	overflow: auto;
+}
+
+.rocket-font-admin .rf-preview h2 {
+	margin: 0 0 4px;
+	font-size: 15px;
+}
+
+.rocket-font-admin .rf-preview h2 .dashicons {
+	color: #2271b1;
+	margin-right: 4px;
+}
+
+.rocket-font-admin .rf-canvas {
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	padding: 12px 14px;
+	margin-top: 8px;
+	background: #fff;
+	color: #1d2327;
+	overflow-wrap: anywhere;
+}
+
+/* 미리보기 안의 태그는 관리자 기본 스타일 영향을 줄인다 (글꼴/색/크기는 JS가 만든 규칙이 결정) */
+.rocket-font-admin .rf-canvas h1,
+.rocket-font-admin .rf-canvas h2,
+.rocket-font-admin .rf-canvas h3,
+.rocket-font-admin .rf-canvas h4,
+.rocket-font-admin .rf-canvas h5,
+.rocket-font-admin .rf-canvas h6,
+.rocket-font-admin .rf-canvas p {
+	margin: 0 0 .6em;
+	padding: 0;
+	line-height: 1.5;
+	font-weight: 600;
+	color: inherit;
+}
+
+.rocket-font-admin .rf-canvas h1 { font-size: 24px; }
+.rocket-font-admin .rf-canvas h2 { font-size: 21px; }
+.rocket-font-admin .rf-canvas h3 { font-size: 18px; }
+.rocket-font-admin .rf-canvas h4 { font-size: 16px; }
+.rocket-font-admin .rf-canvas h5 { font-size: 14px; }
+.rocket-font-admin .rf-canvas h6 { font-size: 13px; }
+
+.rocket-font-admin .rf-canvas p {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.rocket-font-admin .rf-css-line {
+	margin: 12px 0 0;
+	font-size: 12px;
+	color: #50575e;
+}
+
+.rocket-font-admin .rf-css-line code {
+	display: block;
+	margin-top: 4px;
+	padding: 6px 8px;
+	word-break: break-word;
+}
+
+/* 저장 바 : 화면 아래에 항상 표시 */
+.rocket-font-admin .rf-savebar {
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 16px;
+	margin-top: 8px;
+	padding: 12px 20px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	box-shadow: 0 -2px 6px rgba(0, 0, 0, .06);
+}
+
+.rocket-font-admin .rf-dirty {
+	color: #996800;
+	font-weight: 600;
+	margin-right: auto;
+}
+
+.rocket-font-admin .rf-dirty .dashicons {
+	vertical-align: text-bottom;
+}
+
+.rocket-font-admin .rf-reset {
+	margin: 18px 0 0;
+}
+
+/* 한글 폰트 검색 상자 (select2) : 워드프레스 관리자 입력칸과 비슷한 크기와 모양 */
+.rocket-font-admin .select2-container {
+	max-width: 480px;
+}
+
+.rocket-font-admin .select2-container--default .select2-selection--single {
+	height: 36px;
+	border-color: #8c8f94;
+	border-radius: 4px;
+}
+
+.rocket-font-admin .select2-container--default .select2-selection--single .select2-selection__rendered {
+	line-height: 34px;
+	padding-left: 10px;
+	color: #2c3338;
+}
+
+.rocket-font-admin .select2-container--default .select2-selection--single .select2-selection__arrow {
+	height: 34px;
+}
+
+.rocket-font-admin .select2-container--default.select2-container--focus .select2-selection--single,
+.rocket-font-admin .select2-container--default.select2-container--open .select2-selection--single {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+}
+
+/* 열린 목록은 body 아래에 만들어지므로 관리자 막대나 저장 막대보다 위에 보이도록 한다 */
+body > .select2-container {
+	z-index: 100001;
+}
+
+.select2-container--default .select2-results__group {
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+	background-color: #2271b1;
+}
+
+/* "사이트 전체"를 켰을 때 자동으로 정해지는 줄(제목, 문단) */
+.rocket-font-admin .rf-tag-row.is-derived {
+	opacity: .65;
+}
+
+.rocket-font-admin .rf-tag-row.is-derived .wp-picker-container,
+.rocket-font-admin .rf-tag-row.is-derived .rf-range,
+.rocket-font-admin .rf-tag-row.is-derived .rf-switch {
+	pointer-events: none;
+}
+
+.rocket-font-admin .rf-derived {
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	color: #2271b1;
+}
+
+.rocket-font-admin .rf-derived:empty {
+	display: none;
+}
+
+/* 위쪽 버튼 (사이트 전체 / 항목별 / 적용 안 함) : 지금 선택된 것은 "변경 사항 저장" 버튼보다 약간 흐린 색으로 표시 */
+.rocket-font-admin .rf-presets .button.is-active,
+.rocket-font-admin .rf-presets .button.is-active:hover,
+.rocket-font-admin .rf-presets .button.is-active:focus {
+	color: #fff;
+	background: #4f94d4; /* color-mix 를 지원하지 않는 브라우저용 */
+	background: color-mix(in srgb, var(--wp-admin-theme-color, #2271b1) 78%, #fff);
+	border-color: transparent;
+	box-shadow: none;
+}
