@@ -296,6 +296,23 @@ class Font_Setting {
 	}
 
 	/**
+	 * "한글 단어 들여쓰기" : 한글을 글자 중간이 아니라 띄어쓰기(단어) 단위로 줄 바꿈하는 CSS 선언
+	 *
+	 * 폰트 규칙마다 함께 출력한다. 아주 긴 영문이나 주소는 넘치지 않게 끊는다.
+	 *
+	 * @param array $options 플러그인 옵션
+	 * @return string CSS 선언 (사용하지 않으면 "")
+	 */
+	public static function word_break_css($options){
+
+		if(isset($options['word_keep_all']) && 'yes' === $options['word_keep_all']){
+			return 'word-break:keep-all;overflow-wrap:break-word;';
+		}
+
+		return '';
+	}
+
+	/**
 	 * 줄 간격 값 : 글자 크기와 줄 간격을 둘 다 정했으면 "비율"(단위 없음)로 만들어
 	 * 제목처럼 글자 크기가 다른 곳에서도 크기에 비례해서 줄 간격이 정해지게 한다.
 	 * 글자 크기를 정하지 않았으면 입력한 px 값을 그대로 쓴다.

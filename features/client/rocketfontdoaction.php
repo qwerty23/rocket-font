@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class RocketFontDoAction extends Feature {
 
 	public $selected_font_info = array();
+	public $word_keep_all      = 'no';
 
 	public function __construct() {
 
@@ -23,6 +24,7 @@ class RocketFontDoAction extends Feature {
 		if($options['selected_font'] && $css):
 
 			$font_list = Font_Setting::get_font_list();
+			$this->word_keep_all = ( isset($options['word_keep_all']) && 'yes' === $options['word_keep_all'] ) ? 'yes' : 'no';
 			$this->selected_font_info = isset($font_list[$options['selected_font_slug']]) ? $font_list[$options['selected_font_slug']] : array();
 
 			// font async
@@ -65,7 +67,7 @@ class RocketFontDoAction extends Feature {
 		?>
 		<script>
 			jQuery(document).ready(function(){
-				jQuery("body").css({"font-family": <?php echo wp_json_encode($this->selected_font_info['font_name']); ?>});
+				jQuery("body").css({"font-family": <?php echo wp_json_encode($this->selected_font_info['font_name']); ?><?php echo ('yes' === $this->word_keep_all) ? ', "word-break": "keep-all", "overflow-wrap": "break-word"' : ''; ?>});
 			});
 		</script>
 		<?php

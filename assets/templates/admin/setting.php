@@ -298,6 +298,21 @@ $current_preset = ( 'yes' === $options['font_use_body'] ) ? 'body' : ( $any_tag_
 					</details>
 				</section>
 
+				<!-- 4. 한글 단어 들여쓰기 -->
+				<section class="rf-card">
+					<h2><span class="dashicons dashicons-editor-paragraph" aria-hidden="true"></span> <?php esc_html_e( '4. 한글 단어 들여쓰기', 'RocketFont' ); ?></h2>
+
+					<p class="rf-switch-line">
+						<label class="rf-switch" for="rf-word-keep-all">
+							<input type="hidden" name="<?php echo $input_name( 'word_keep_all' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>" value="no">
+							<input type="checkbox" id="rf-word-keep-all" name="<?php echo $input_name( 'word_keep_all' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>" value="yes" <?php checked( $options['word_keep_all'], 'yes' ); ?>>
+							<span class="rf-switch-ui" aria-hidden="true"></span>
+						</label>
+						<label class="rf-switch-text" for="rf-word-keep-all"><?php esc_html_e( '한글을 단어(띄어쓰기) 단위로 줄 바꾸기', 'RocketFont' ); ?></label>
+					</p>
+					<p class="description"><?php esc_html_e( '줄 끝에서 한글이 "다/른 사용자"처럼 글자 중간에서 끊기지 않고, "다른 / 사용자"처럼 띄어쓰기 단위로 줄이 바뀌게 합니다. 켜면 위에서 폰트를 적용하는 곳에 이 설정이 폰트 CSS와 함께 추가되고(CSS word-break: keep-all), 아주 긴 영문이나 주소는 화면을 넘치지 않게 끊어 줍니다. 소괄호 바로 뒤에 조사가 붙는 곳 등 일부는 단어 중간에서 끊길 수 있습니다.', 'RocketFont' ); ?></p>
+				</section>
+
 			</div><!-- /.rf-settings -->
 
 			<!-- 미리보기 -->

@@ -1,10 +1,10 @@
 === 한글 ===
-Contributors: qwerty23
-Tags: korean, font, web font, hangul, typography
+Contributors: Qwerty23
+Tags: korean, font, web font, hangul, typography, 한글
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,7 @@ CSS 를 잘 다루지 못하는 분들을 위해 최대한 쉽게 만들었습�
 * Searchable font list (select2) and a live preview that stays in view while you scroll.
 * Live preview while you change fonts, colors, sizes and line heights.
 * Change the font of just the text you select while writing a post: a "한글" button in the block editor toolbar and in the classic editor toolbar (searchable font list). Only the fonts used in a post are loaded on the front end.
+* Optional "Korean word wrap": break lines at spaces instead of in the middle of a Korean word (CSS `word-break: keep-all`).
 * Optional separate English font (choose from a list or enter a Google Fonts URL).
 * Three one-click presets: whole site (body), per tag, or off.
 * "Whole site" sizes headings automatically from the body size: p is the base, h6 is +2px, up to h1 at +12px, with proportional line heights.
@@ -101,6 +102,9 @@ The front end only loads one very small CSS file plus the font stylesheet from t
 3. 폰트가 적용된 사이트 화면.
 
 == Changelog ==
+
+= 2.1.0 =
+* new : **한글 단어 들여쓰기** 옵션을 추가했습니다. 켜면 줄 끝에서 한글이 글자 중간(예: "다/른")이 아니라 띄어쓰기(단어) 단위로 줄 바꿈됩니다. 폰트를 적용하는 곳에 `word-break: keep-all` 이 폰트 CSS와 함께 추가되고, 설정 화면 미리보기에도 바로 반영됩니다.
 
 = 2.0.0 =
 * change : 폰트 목록을 점검해 **라이선스를 확인할 수 없거나 폰트 파일을 더 이상 CDN 에서 받을 수 없는 폰트를 목록에서 뺐습니다.** (제주 고딕/명조/한라산, 한나, KoPub 바탕, 이롭게 바탕, 오버워치, KCC은영체, 윤봉길체, 스포카 한 산스) 이 폰트를 사용 중이던 사이트에는 설정 화면에 안내가 표시되며, 다른 폰트를 골라 저장하면 됩니다.

@@ -37,8 +37,11 @@ $font_family_value .= $generic_family;
 /**
  * 규칙 하나를 출력한다.  $tag 는 코드 안에 정의된 태그 이름, 나머지 값은 위에서 검증한 값이다.
  */
-$print_rule = function ( $tag, $color, $size, $line_height ) use ( $font_family_value ) {
-	echo $tag . '{font-family:' . $font_family_value . ';';
+// 한글 단어 들여쓰기 (사용하지 않으면 빈 문자열)
+$word_break = \rocket_font\Font_Setting::word_break_css( $options );
+
+$print_rule = function ( $tag, $color, $size, $line_height ) use ( $font_family_value, $word_break ) {
+	echo $tag . '{font-family:' . $font_family_value . ';' . $word_break;
 	if ( '' !== $color ) {
 		echo 'color:' . $color . ';';
 	}
@@ -99,7 +102,7 @@ if($class_id_list !== '') {
 	}
 
 	echo $generic_family;
-	?>;
+	?>;<?php echo $word_break; ?>
 	}
 	<?php
 }

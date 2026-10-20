@@ -115,6 +115,11 @@ jQuery(function ($) {
 		}
 	}
 
+	// 한글 단어 들여쓰기 : 서버(Font_Setting::word_break_css)와 같은 선언
+	function wordBreakDecl() {
+		return field('word_keep_all').filter(':checkbox').is(':checked') ? 'word-break:keep-all;overflow-wrap:break-word;' : '';
+	}
+
 	function numberOrEmpty(value) {
 		var v = String(value).trim();
 		return /^\d{1,3}(\.\d{1,2})?$/.test(v) ? v : '';
@@ -293,6 +298,7 @@ jQuery(function ($) {
 		var stack = currentStack();
 		var css = '';
 		var canvas = '#rf-preview-canvas';
+		var wb = wordBreakDecl();
 
 		if (bodyOn()) {
 			var size = numberOrEmpty(field('font_weight_body').val());
@@ -300,7 +306,7 @@ jQuery(function ($) {
 			var color = String(field('font_color_body').val() || '').trim();
 			var scaled = bodyScale(size, lh);
 
-			var decl = 'font-family:' + stack + ';';
+			var decl = 'font-family:' + stack + ';' + wb;
 			if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(color)) {
 				decl += 'color:' + color + ';';
 			}
@@ -313,7 +319,7 @@ jQuery(function ($) {
 			css += canvas + '{' + decl + '}';
 
 			$.each(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'], function (i, tag) {
-				var d = 'font-family:' + stack + ';';
+				var d = 'font-family:' + stack + ';' + wb;
 				if (scaled[tag].size !== '') {
 					d += 'font-size:' + scaled[tag].size + 'px;';
 				}
@@ -328,7 +334,7 @@ jQuery(function ($) {
 					return;
 				}
 
-				var d = 'font-family:' + stack + ';';
+				var d = 'font-family:' + stack + ';' + wb;
 
 				var c = String(field('font_color_' + tag).val() || '').trim();
 				if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(c)) {
@@ -514,6 +520,9 @@ jQuery(function ($) {
 
 	toggleEnglishMode();
 	buildPreview();
+
+	// 서버가 처음에 내보낸 미리보기 CSS 는 더 이상 필요 없다 (위에서 같은 규칙을 다시 만들었다)
+	$('#rocket-font-preview-css-inline-css').remove();
 
 	// 초기화 과정에서 발생한 이벤트로 "변경됨" 표시가 생기지 않도록 한다
 	window.setTimeout(function () {

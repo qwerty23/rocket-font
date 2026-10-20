@@ -353,6 +353,7 @@ class Setting extends Feature {
 
 		$css    = '';
 		$canvas = '#rf-preview-canvas';
+		$wb     = Font_Setting::word_break_css( $options ); // 한글 단어 들여쓰기
 		$number = '/^\d{1,3}(\.\d{1,2})?$/';
 
 		// "사이트 전체(body)" : 본문(p)을 기준으로 제목(h1~h6)의 크기와 줄 간격을 비례해서 정한다
@@ -362,7 +363,7 @@ class Setting extends Feature {
 			$size  = preg_match( $number, $options['font_weight_body'] ) ? $options['font_weight_body'] : '';
 			$line  = preg_match( $number, $options['font_lineheight_body'] ) ? $options['font_lineheight_body'] : '';
 
-			$decl = 'font-family:' . $stack . ';';
+			$decl = 'font-family:' . $stack . ';' . $wb;
 			if ( preg_match( '/^#([0-9a-f]{3}|[0-9a-f]{6})$/i', $color ) ) {
 				$decl .= 'color:' . $color . ';';
 			}
@@ -376,7 +377,7 @@ class Setting extends Feature {
 
 			$scaled = Font_Setting::body_scale( $size, $line );
 			foreach ( array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p' ) as $tag ) {
-				$decl = 'font-family:' . $stack . ';';
+				$decl = 'font-family:' . $stack . ';' . $wb;
 				if ( '' !== $scaled[ $tag ]['size'] ) {
 					$decl .= 'font-size:' . $scaled[ $tag ]['size'] . 'px;';
 				}
@@ -396,7 +397,7 @@ class Setting extends Feature {
 				continue;
 			}
 
-			$decl = 'font-family:' . $stack . ';';
+			$decl = 'font-family:' . $stack . ';' . $wb;
 
 			$color = $options[ 'font_color_' . $tag ];
 			if ( preg_match( '/^#([0-9a-f]{3}|[0-9a-f]{6})$/i', $color ) ) {
@@ -463,7 +464,11 @@ class Setting extends Feature {
 			}
 		}
 
-		wp_add_inline_style( 'rocket-font-admin-setting', $this->build_preview_css( $options, $fonts ) );
+		// 미리보기 CSS 는 별도의 <style> 로 내보낸다. 화면이 열리면 자바스크립트가 같은 규칙을 다시 만들면서 이 <style> 을 지우므로,
+		// 값을 껐을 때(색 지우기, 한글 단어 들여쓰기 끄기 등) 저장된 예전 규칙이 남아 미리보기에 계속 적용되는 일이 없다.
+		wp_register_style( 'rocket-font-preview-css', false, array(), null );
+		wp_enqueue_style( 'rocket-font-preview-css' );
+		wp_add_inline_style( 'rocket-font-preview-css', $this->build_preview_css( $options, $fonts ) );
 
 		wp_register_script(
 			'rocket-font-admin-setting',

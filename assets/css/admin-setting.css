@@ -355,3 +355,22 @@ body > .select2-container {
 	border-color: transparent;
 	box-shadow: none;
 }
+
+/* 4. 한글 단어 들여쓰기 : 스위치와 이름을 한 줄에 */
+.rocket-font-admin .rf-switch-line {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 12px 0 6px;
+}
+
+.rocket-font-admin .rf-switch-text {
+	font-weight: 600;
+	cursor: pointer;
+}
+
+/* 설정 화면의 안내 문구는 한글을 단어 단위로 줄 바꿈한다 (미리보기 칸은 제외 : 옵션을 켰을 때만 바뀌어야 한다) */
+.rocket-font-admin .description {
+	word-break: keep-all;
+	overflow-wrap: break-word;
+}

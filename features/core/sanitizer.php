@@ -87,6 +87,7 @@ class Sanitizer {
 				case 'rocketfont_class_id_list':
 					$clean[ $name ] = self::selector_list( $raw );
 					break;
+				case 'word_keep_all':
 				case 'use_editor_font':
 				case 'use_async':
 				case 'use_jquery':
