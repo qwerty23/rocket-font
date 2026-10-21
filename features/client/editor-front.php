@@ -80,7 +80,7 @@ class EditorFront extends Feature {
 			}
 
 			if ( '' !== $url ) {
-				wp_enqueue_style( 'rocket-font-ef-' . $slug, $url, array(), null );
+				wp_enqueue_style( 'rocket-font-ef-' . $slug, $url, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- 외부 폰트 CSS 는 주소가 곧 버전이다
 			}
 
 			wp_enqueue_style( self::STYLE_HANDLE );

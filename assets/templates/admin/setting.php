@@ -13,6 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // 직접 접근 차단
 }
 
+// 이 파일은 함수 안에서 불러와 쓰므로 아래 변수는 전역 변수가 아니다
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 // 입력 이름 : rocket_font[항목]
 $input_name = function ( $key ) use ( $option_key ) {
 	return esc_attr( $option_key . '[' . $key . ']' );

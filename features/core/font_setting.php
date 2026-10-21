@@ -461,7 +461,7 @@ class Font_Setting {
 		$result = ob_get_clean();
 
 		$dir = self::get_upload_css_dir( true );
-		if( ! $dir || ! is_writable( $dir ) ){
+		if( ! $dir || ! wp_is_writable( $dir ) ){
 			return false;
 		}
 
@@ -479,7 +479,6 @@ class Font_Setting {
 			return false;
 		}
 
-		@chmod( $path, 0644 );
 		return true;
 	}
 

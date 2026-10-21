@@ -32,7 +32,7 @@ class RocketFontDoAction extends Feature {
 				$this->add_action('wp_head','rocket_font_async', 50);
 			else:
 				if(!empty($this->selected_font_info['cdn_url'])){
-					wp_enqueue_style( 'rocket-font', $this->selected_font_info['cdn_url'], array(), null );
+					wp_enqueue_style( 'rocket-font', $this->selected_font_info['cdn_url'], array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- 외부 폰트 CSS 는 주소가 곧 버전이다
 				}
 			endif;
 
@@ -42,13 +42,13 @@ class RocketFontDoAction extends Feature {
 				$family_url = Sanitizer::font_url($options['selected_font_family_url']);
 				if(!empty($family_url)){
 
-					wp_enqueue_style( 'rocket-backup', $family_url, array(), null, 'all' );
+					wp_enqueue_style( 'rocket-backup', $family_url, array(), null, 'all' ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- 외부 폰트 CSS 는 주소가 곧 버전이다
 				}
 
 			}
 
 			// ?ver= 를 지우는 테마/플러그인이 있어도 캐시가 갱신되도록 다른 이름(rf)으로 저장 시각을 붙인다
-			wp_enqueue_style( 'rocket-font-css', add_query_arg( 'rf', (int) $options['update_time'], $css['url'] ), array(), null );
+			wp_enqueue_style( 'rocket-font-css', add_query_arg( 'rf', (int) $options['update_time'], $css['url'] ), array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- 외부 폰트 CSS 는 주소가 곧 버전이다
 
 			if($options['use_jquery']=="yes"):
 

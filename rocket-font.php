@@ -1,17 +1,16 @@
 <?php
 /**
- * Plugin Name:       한글
+ * Plugin Name:       Rocket Font - 한글
  * Plugin URI:        http://in-web.co.kr/wordpress/plug-in/wordpress-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%ED%8F%B0%ED%8A%B8%EB%A5%BC-rocket-font/
  * Description:       한글 폰트를 쉽게 적용하는 플러그인입니다. 폰트를 고르고 저장하기만 하면 CSS 파일을 고치지 않고도 사이트 전체에 한글 폰트가 적용됩니다. (Apply Korean web fonts to your site without editing any CSS.)
- * Version:           2.1.0
+ * Version:           2.1.1
  * Requires at least: 5.0
  * Requires PHP:      7.0
  * Author:            Qwerty23
  * Author URI:        http://in-web.co.kr/
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       RocketFont
- * Domain Path:       /languages
+ * Text Domain:       rocket-font
  */
 
 namespace rocket_font;
@@ -20,10 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // 직접 접근 차단
 }
 
-define( 'rocket_font\VERSION', '2.1.0' );
+define( 'rocket_font\VERSION', '2.1.1' );
 define( 'rocket_font\PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'rocket_font\PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'rocket_font\PLUGIN_PREFIX'	, 'RocketFont');
+define( 'rocket_font\PLUGIN_PREFIX'	, 'rocket-font');
 define( 'rocket_font\PLUGIN_MENU_SLUG'	, 'rocket-font-setting');
 
 require_once( 'features/feature.php' );
@@ -38,7 +37,7 @@ class RocketFont extends Plugin_Set {
 
 	public static function init() {
 		if ( !self::$__instance ) {
-			load_plugin_textdomain( PLUGIN_PREFIX, FALSE, basename( dirname( __FILE__ ) ) . '/languages' );
+
 			self::$__instance = new RocketFont();
 			parent::initialize();
 			self::maybe_upgrade();

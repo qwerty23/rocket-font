@@ -46,7 +46,7 @@ class Setting extends Feature {
 	 * 지금 보고 있는 화면이 이 플러그인의 설정 화면인지
 	 */
 	private function is_setting_page() {
-		return isset( $_GET['page'] ) && PLUGIN_MENU_SLUG === sanitize_key( wp_unslash( $_GET['page'] ) );
+		return isset( $_GET['page'] ) && PLUGIN_MENU_SLUG === sanitize_key( wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- 화면 확인용
 	}
 
 	/**
@@ -206,7 +206,7 @@ class Setting extends Feature {
 		$template->set( 'option_key', PluginOptions::$option_key );
 		$template->set( 'option_group', self::OPTION_GROUP );
 		$template->set( 'reset_url', admin_url( 'admin-post.php' ) );
-		$template->set( 'was_reset', isset( $_GET['rf_reset'] ) );
+		$template->set( 'was_reset', isset( $_GET['rf_reset'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- 표시용 값
 		$template->set( 'plugin_url', PLUGIN_URL );
 		$template->set( 'version', VERSION );
 		$template->set( 'options', self::get_current_all_options() );
@@ -432,9 +432,9 @@ class Setting extends Feature {
 
 		wp_enqueue_style(
 			'rocket-font-admin-setting',
-			PLUGIN_URL . 'assets/css/admin-setting.css?rf=' . VERSION,
+			PLUGIN_URL . 'assets/css/admin-setting.css',
 			array( 'wp-color-picker', 'rocket-font-select2' ),
-			null
+			VERSION
 		);
 
 		$options = self::get_current_all_options();
@@ -448,7 +448,7 @@ class Setting extends Feature {
 
 			if ( ! empty( $font['cdn_url'] ) ) {
 				$url = ( 0 === strpos( $font['cdn_url'], '//' ) ) ? 'https:' . $font['cdn_url'] : $font['cdn_url'];
-				wp_enqueue_style( 'rocket-font-preview-font', $url, array(), null );
+				wp_enqueue_style( 'rocket-font-preview-font', $url, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- 외부 폰트 CSS 는 주소가 곧 버전이다
 			}
 
 			if ( ! empty( $font['inline_font_face'] ) ) {
@@ -460,21 +460,21 @@ class Setting extends Feature {
 		if ( 'text' === $options['en_font_add_type'] && '' !== $options['selected_font_family_url'] ) {
 			$en_url = Sanitizer::font_url( $options['selected_font_family_url'] );
 			if ( '' !== $en_url ) {
-				wp_enqueue_style( 'rocket-font-preview-en-font', $en_url, array(), null );
+				wp_enqueue_style( 'rocket-font-preview-en-font', $en_url, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- 외부 폰트 CSS 는 주소가 곧 버전이다
 			}
 		}
 
 		// 미리보기 CSS 는 별도의 <style> 로 내보낸다. 화면이 열리면 자바스크립트가 같은 규칙을 다시 만들면서 이 <style> 을 지우므로,
 		// 값을 껐을 때(색 지우기, 한글 단어 들여쓰기 끄기 등) 저장된 예전 규칙이 남아 미리보기에 계속 적용되는 일이 없다.
-		wp_register_style( 'rocket-font-preview-css', false, array(), null );
+		wp_register_style( 'rocket-font-preview-css', false, array(), VERSION );
 		wp_enqueue_style( 'rocket-font-preview-css' );
 		wp_add_inline_style( 'rocket-font-preview-css', $this->build_preview_css( $options, $fonts ) );
 
 		wp_register_script(
 			'rocket-font-admin-setting',
-			PLUGIN_URL . 'assets/js/setting.js?rf=' . VERSION,
+			PLUGIN_URL . 'assets/js/setting.js',
 			array( 'jquery', 'wp-color-picker', 'rocket-font-select2' ),
-			null,
+			VERSION,
 			true
 		);
 		wp_localize_script( 'rocket-font-admin-setting', 'rocketFontAdmin', $this->get_js_data() );

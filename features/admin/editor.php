@@ -52,16 +52,16 @@ class Editor extends Feature {
 
 		wp_enqueue_style(
 			'rocket-font-editor',
-			PLUGIN_URL . 'assets/css/editor-font.css?rf=' . VERSION,
+			PLUGIN_URL . 'assets/css/editor-font.css',
 			array(),
-			null
+			VERSION
 		);
 
 		wp_register_script(
 			'rocket-font-editor-block',
-			PLUGIN_URL . 'assets/js/editor-block.js?rf=' . VERSION,
+			PLUGIN_URL . 'assets/js/editor-block.js',
 			array( 'wp-rich-text', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n' ),
-			null,
+			VERSION,
 			true
 		);
 
@@ -127,7 +127,7 @@ class Editor extends Feature {
 	public function mce_plugin( $plugins ) {
 
 		if ( $this->can_edit() && is_array( $plugins ) ) {
-			$plugins['rocketfont'] = PLUGIN_URL . 'assets/js/editor-tinymce.js?rf=' . VERSION;
+			$plugins['rocketfont'] = PLUGIN_URL . 'assets/js/editor-tinymce.js?ver=' . VERSION;
 		}
 
 		return $plugins;

@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// CSS 파일로 저장하는 값이며 HTML 이 아니다. 값은 위에서 설명한 대로 검증되었다.
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 $double_qute = '"';
 
 $korean_font_name  = isset( $selected_font_info['font_name'] ) ? $selected_font_info['font_name'] : '';

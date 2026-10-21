@@ -1,10 +1,10 @@
-=== 한글 ===
+=== Rocket Font - 한글 ===
 Contributors: Qwerty23
-Tags: korean, font, web font, hangul, typography, 한글
+Tags: korean, font, web font, hangul, typography
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,9 @@ The front end only loads one very small CSS file plus the font stylesheet from t
 
 == Changelog ==
 
+= 2.1.1 =
+* fix : Plugin Check 점검 결과를 반영했습니다. 플러그인 이름과 텍스트 도메인을 형식에 맞게 바꾸고, 스크립트와 스타일 버전 지정, 파일 삭제와 쓰기 확인에 워드프레스 함수를 사용합니다. 동작은 바뀌지 않습니다.
+
 = 2.1.0 =
 * new : **한글 단어 들여쓰기** 옵션을 추가했습니다. 켜면 줄 끝에서 한글이 글자 중간(예: "다/른")이 아니라 띄어쓰기(단어) 단위로 줄 바꿈됩니다. 폰트를 적용하는 곳에 `word-break: keep-all` 이 폰트 CSS와 함께 추가되고, 설정 화면 미리보기에도 바로 반영됩니다.
 
@@ -168,5 +171,8 @@ The front end only loads one very small CSS file plus the font stylesheet from t
 
 == Upgrade Notice ==
 
+= 2.1.1 =
+Maintenance update. No change in behavior.
+
 = 2.0.0 =
-보안 업데이트입니다. 폰트 목록이 바뀌어 일부 폰트(제주 고딕 등)는 더 이상 제공되지 않습니다. 이전 버전에서는 설정 저장 처리에 권한 및 nonce 확인이 없었습니다. 반드시 업데이트해 주세요. 업데이트 후 설정 화면에서 한 번 저장하면 새 위치(uploads/rocket-font/)에 CSS 가 생성됩니다.
+Security update: older versions had no permission or nonce check when saving settings. Please update, then save the settings once.

@@ -25,30 +25,33 @@ function rocket_font_uninstall_site() {
 		$dir = trailingslashit( $upload['basedir'] ) . 'rocket-font/';
 
 		if ( is_dir( $dir ) ) {
-			$files = glob( $dir . '*' );
-			if ( is_array( $files ) ) {
-				foreach ( $files as $file ) {
-					if ( is_file( $file ) ) {
-						@unlink( $file );
-					}
-				}
+			// 폴더 안의 파일과 폴더 자체를 워드프레스 파일 시스템 API 로 지운다
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			if ( WP_Filesystem() ) {
+				global $wp_filesystem;
+				$wp_filesystem->delete( $dir, true );
 			}
-			@rmdir( $dir );
 		}
 	}
 }
 
-if ( is_multisite() ) {
+/**
+ * 멀티 사이트이면 모든 사이트에서, 아니면 현재 사이트에서 실행한다
+ */
+function rocket_font_uninstall() {
 
-	$site_ids = get_sites( array( 'fields' => 'ids', 'number' => 0 ) );
+	if ( is_multisite() ) {
 
-	foreach ( $site_ids as $site_id ) {
-		switch_to_blog( $site_id );
+		foreach ( get_sites( array( 'fields' => 'ids', 'number' => 0 ) ) as $site_id ) {
+			switch_to_blog( $site_id );
+			rocket_font_uninstall_site();
+			restore_current_blog();
+		}
+
+	} else {
+
 		rocket_font_uninstall_site();
-		restore_current_blog();
 	}
-
-} else {
-
-	rocket_font_uninstall_site();
 }
+
+rocket_font_uninstall();
