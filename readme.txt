@@ -1,10 +1,10 @@
 === Rocket Font - 한글 ===
-Contributors: Qwerty23
+Contributors: qwerty-23
 Tags: korean, font, web font, hangul, typography
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ The front end only loads one very small CSS file plus the font stylesheet from t
 
 == Changelog ==
 
+= 2.1.2 =
+* security : CSRF(Cross-Site Request Forgery) 보호를 다시 점검했습니다. 설정 저장과 "기본값으로 되돌리기"는 관리자 권한과 nonce 확인을 거쳐야만 동작합니다.
+* change : readme 의 Contributors 를 wordpress.org 사용자 이름 `qwerty-23` 으로 바꿨습니다.
+
 = 2.1.1 =
 * fix : Plugin Check 점검 결과를 반영했습니다. 플러그인 이름과 텍스트 도메인을 형식에 맞게 바꾸고, 스크립트와 스타일 버전 지정, 파일 삭제와 쓰기 확인에 워드프레스 함수를 사용합니다. 동작은 바뀌지 않습니다.
 
@@ -170,6 +174,9 @@ The front end only loads one very small CSS file plus the font stylesheet from t
 * 첫 버전
 
 == Upgrade Notice ==
+
+= 2.1.2 =
+Security update. Saving and resetting the settings require a logged-in administrator and a valid nonce (CSRF fix). Please update.
 
 = 2.1.1 =
 Maintenance update. No change in behavior.
