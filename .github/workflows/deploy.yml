@@ -1,5 +1,5 @@
 # 태그를 푸시하면 wordpress.org 플러그인 저장소(SVN)에 올린다.
-# 처음에는 아래 "Actions" 탭의 "Run workflow" 에서 dry_run 을 켜고 실행해 올라갈 파일을 확인한다.
+# 처음에는 아래 "Actions" 탭의 "Run workflow" 에서 dry_run 을 true 로 두고 실행해 올라갈 파일을 확인한다. (true 이면 SVN 에 커밋하지 않는다)
 #
 # 필요한 설정 : GitHub 저장소 Settings > Secrets and variables > Actions
 #   SVN_USERNAME : wordpress.org 사용자 이름 (qwerty-23)
@@ -35,4 +35,5 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: rocket-font
           VERSION: ${{ github.event.inputs.version }}
-          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' }}
+        with:
+          dry-run: ${{ github.event.inputs.dry_run == 'true' }}
