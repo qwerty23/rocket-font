@@ -1,0 +1,38 @@
+# 태그를 푸시하면 wordpress.org 플러그인 저장소(SVN)에 올린다.
+# 처음에는 아래 "Actions" 탭의 "Run workflow" 에서 dry_run 을 켜고 실행해 올라갈 파일을 확인한다.
+#
+# 필요한 설정 : GitHub 저장소 Settings > Secrets and variables > Actions
+#   SVN_USERNAME : wordpress.org 사용자 이름 (qwerty-23)
+#   SVN_PASSWORD : wordpress.org 계정 설정에서 만든 SVN 전용 비밀번호
+name: Deploy to WordPress.org
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "올릴 버전 (예: 2.1.2). 태그를 푸시했을 때는 비워 둔다"
+        required: false
+      dry_run:
+        description: "true 이면 SVN 에 커밋하지 않고 올라갈 파일만 확인한다"
+        required: true
+        default: "true"
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: rocket-font
+          VERSION: ${{ github.event.inputs.version }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' }}

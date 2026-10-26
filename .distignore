@@ -1,0 +1,11 @@
+# wordpress.org 의 plugin 폴더(trunk)에 올리지 않을 파일
+.git
+.github
+.gitignore
+.gitattributes
+.distignore
+.vscode
+.wordpress-org
+node_modules
+*.zip
+README.md
