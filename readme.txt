@@ -14,6 +14,11 @@ Apply Korean web fonts to your whole site in a few clicks - no CSS editing requi
 
 **한글 (Rocket Font)** lets you use Korean (Hangul) web fonts on your WordPress site without touching any CSS. Pick a font, check the live preview, save - that's all.
 
+= 업데이트 안내 =
+
+보안 문제를 고치고, 폰트를 일부 업데이트 및 추가했으며 설정 화면은 좀더 단순하게 수정했습니다. 
+사용하다가 버그 및 오류가 있다면 알려주세요.
+
 = 이런 분께 추천합니다 =
 
 CSS 를 잘 다루지 못하는 분들을 위해 최대한 쉽게 만들었습니다.
